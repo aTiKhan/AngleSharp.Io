@@ -1,10 +1,8 @@
-﻿namespace AngleSharp.Io.Dom
+namespace AngleSharp.Io.Dom
 {
     using AngleSharp.Attributes;
     using AngleSharp.Dom;
     using AngleSharp.Dom.Events;
-    using AngleSharp.Html;
-    using AngleSharp.Io.Extensions;
     using System;
     using System.Linq;
     using System.Net.WebSockets;
@@ -29,7 +27,7 @@
         private readonly ClientWebSocket _ws;
         private readonly IWindow _window;
 
-        WebSocketReadyState _state;
+        private WebSocketReadyState _state;
 
         #endregion
 
@@ -139,19 +137,13 @@
         /// Gets the URL the connection is made to.
         /// </summary>
         [DomName("url")]
-        public String Url
-        {
-            get { return _url.Href; }
-        }
+        public String Url => _url.Href;
 
         /// <summary>
         /// Gets the current state of the connection.
         /// </summary>
         [DomName("readyState")]
-        public WebSocketReadyState ReadyState
-        {
-            get { return _state; }
-        }
+        public WebSocketReadyState ReadyState => _state;
 
         /// <summary>
         /// Gets the number of bytes of UTF-8 text that have been queued using
@@ -159,19 +151,13 @@
         /// executing a task, had not yet been transmitted to the network.
         /// </summary>
         [DomName("bufferedAmount")]
-        public Int64 Buffered
-        {
-            get { return 0; }
-        }
+        public Int64 Buffered => 0;
 
         /// <summary>
         /// Gets the chosen protocol for the connection.
         /// </summary>
         [DomName("protocol")]
-        public String Protocol
-        {
-            get { return _ws.SubProtocol ?? String.Empty; }
-        }
+        public String Protocol => _ws.SubProtocol ?? String.Empty;
 
         #endregion
 
@@ -334,28 +320,28 @@
         {
             var evt = new MessageEvent();
             evt.Init(EventNames.Message, false, false, message, _url.Origin, String.Empty, _window);
-            this.Dispatch(evt);
+            Dispatch(evt);
         }
 
         private void OnError(Exception ex)
         {
             var evt = new ErrorEvent();
             evt.Init(EventNames.Error, false, false);
-            this.Dispatch(evt);
+            Dispatch(evt);
         }
 
         private void OnDisconnected()
         {
             var evt = new Event();
             evt.Init(CloseEvent, false, false);
-            this.Dispatch(evt);
+            Dispatch(evt);
         }
 
         private void OnConnected()
         {
             var evt = new Event();
             evt.Init(OpenEvent, false, false);
-            this.Dispatch(evt);
+            Dispatch(evt);
         }
 
         #endregion
